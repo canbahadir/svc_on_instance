@@ -1,0 +1,8 @@
+---
+  - name: "Precheck tasks"
+    hosts: instance_1
+
+    tasks:
+
+    - name: Distribution check
+      debug: msg="{{ ansible_distribution }}"
