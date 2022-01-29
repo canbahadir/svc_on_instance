@@ -11,7 +11,8 @@ steps:
   - |-
     sed -i 's/host_ip/${_ANSIBLE_HOST}/g' hosts.yml;
     sed -i 's/host_user/${_ANSIBLE_USER}/g' hosts.yml;
-    echo "$$RSAKEY" >> ~/id_rsa_gcp
+    echo "$$RSAKEY" >> ~/id_rsa_gcp;
+    cat hosts.yml
   secretEnv: ['RSAKEY']
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'
