@@ -4,7 +4,6 @@ steps:
   timeout: 500s
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/svc_docker-$BUILD_ID']
-
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -13,11 +12,9 @@ steps:
     sed -i 's/host_ip/${_ANSIBLE_HOST}/g' host.yml;
     sed -i 's/host_user/${_ANSIBLE_USER}/g' host.yml;
     "$$RSAKEY" >> ~/.ssh/id_rsa_gcp
-
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'
   args: ['-i', 'host.yml,', 'precheck.yml']
-
 availableSecrets:
   secretManager:
   - versionName:   projects/70714972090/secrets/id_rsa_gcp/versions/1
