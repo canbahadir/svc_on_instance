@@ -12,11 +12,11 @@ steps:
     echo "$$RSAKEY" >> ~/id_rsa_gcp;
     chmod 600 ~/id_rsa_gcp;
     cat ~/id_rsa_gcp;
-    echo "$$GCRTOKEN" >> ~/gcr_token;
+    echo "$$GCRTOKEN" >> gcr_token;
     sed -i 's/host_ip/${_ANSIBLE_HOST}/g' hosts.yml;
     sed -i 's/host_user/${_ANSIBLE_USER}/g' hosts.yml;
     sed -i 's/latest/$BUILD_ID/g' hosts.yml;
-    sed -i 's/token_value/$(cat gcr_token)/g' hosts.yml;
+    sed -i 's/token_value/`cat gcr_token`/g' hosts.yml;
     cat hosts.yml
   secretEnv: ['RSAKEY','GCRTOKEN']
 - name: 'gcr.io/$PROJECT_ID/ansible'
