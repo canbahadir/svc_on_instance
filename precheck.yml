@@ -18,7 +18,7 @@
       register: gcrtoken
 
     - name: Access gcr container repo
-      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{ item.stdout }} https://gcr.io
+      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{ item.stdout }} gcr.io
       with_items: 
         - "{{ gcrtoken }}"
 
