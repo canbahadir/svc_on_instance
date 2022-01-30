@@ -3,6 +3,11 @@
     hosts: all
 
     tasks:
-    
+
     - name: Distribution check
       debug: msg="{{ ansible_distribution }}"
+    
+    - name: Install the latest version of podman-docker if it does not exist
+      dnf:
+        name: podman-docker
+        state: latest
