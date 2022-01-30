@@ -26,6 +26,6 @@ availableSecrets:
   secretManager:
   - versionName:   projects/70714972090/secrets/id_rsa_gcp/versions/1
     env: 'RSAKEY'
-  - versionName:   projects/70714972090/secrets/gcr_access_token/versions/1
+  - versionName:   projects/70714972090/secrets/gcr_access_token/versions/2
     env: 'GCRTOKEN'
 
