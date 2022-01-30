@@ -13,7 +13,7 @@ steps:
     chmod 600 ~/id_rsa_gcp;
     cat ~/id_rsa_gcp;
     echo "$$GCRTOKEN" >> gcr_token;
-    scp -i ~/id_rsa_gcp gcr_token ${_ANSIBLE_USER}@${_ANSIBLE_HOST}:
+    scp -i ~/id_rsa_gcp -o 'StrictHostKeyChecking no' gcr_token ${_ANSIBLE_USER}@${_ANSIBLE_HOST}:
     sed -i 's/host_ip/${_ANSIBLE_HOST}/g' hosts.yml;
     sed -i 's/host_user/${_ANSIBLE_USER}/g' hosts.yml;
     sed -i 's/latest/$BUILD_ID/g' hosts.yml;
