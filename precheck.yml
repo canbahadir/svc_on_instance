@@ -11,3 +11,4 @@
       dnf:
         name: podman-docker
         state: latest
+      become: yes
