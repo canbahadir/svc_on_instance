@@ -16,7 +16,7 @@ steps:
   secretEnv: ['RSAKEY']
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'
-  args: ['-i', 'hosts.yml,', 'precheck.yml']
+  args: ['-i', 'hosts.yml', 'precheck.yml']
 availableSecrets:
   secretManager:
   - versionName:   projects/70714972090/secrets/id_rsa_gcp/versions/1
