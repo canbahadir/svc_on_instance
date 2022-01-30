@@ -24,8 +24,8 @@ steps:
   args: ['-i', 'hosts.yml', 'precheck.yml']
 availableSecrets:
   secretManager:
-  - versionName:   projects/70714972090/secrets/id_rsa_gcp/versions/1
+  - versionName:   projects/$PROJECT_ID/secrets/id_rsa_gcp/versions/1
     env: 'RSAKEY'
-  - versionName:   projects/70714972090/secrets/gcr_access_token/versions/2
+  - versionName:   projects/$PROJECT_ID/secrets/gcr_access_token/versions/2
     env: 'GCRTOKEN'
 

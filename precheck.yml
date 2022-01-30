@@ -14,10 +14,10 @@
       become: yes
 
     - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-      ansible.builtin.shell: docker login -u oauth2accesstoken -p "$(echo ~/gcr_token)" https://gcr.io
+      ansible.builtin.shell: docker login -u oauth2accesstoken -p $(cat ~/gcr_token) https://gcr.io
 
     - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:"$(echo ~/build_id)"
+      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:$(cat ~/build_id)
 
     - name: Execute the command in remote shell; stdout goes to the specified file on the remote
       ansible.builtin.shell: docker image ls
