@@ -18,12 +18,12 @@
       register: gcrtoken
 
     - name: Access gcr container repo
-      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{item}} https://gcr.io
+      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{ item }} https://gcr.io
       with_items: 
-        - {{gcrtoken}}
+        - "{{ gcrtoken }}"
 
     - name: Pull app container with defined version
-      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{app_version}}
+      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{ app_version }}
 
     - name: Check downloaded container images
       ansible.builtin.shell: docker image ls
