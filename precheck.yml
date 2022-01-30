@@ -33,3 +33,15 @@
       debug: msg="{{ item.stdout }}"
       with_items:
         - "{{ imagelist }}"
+
+    - name: Pull app container with defined version
+      ansible.builtin.shell: docker run -d -p 4000:8080 --name node-svc svc_docker:{{ app_version }}
+
+    - name: Check service
+      ansible.builtin.shell: curl localhost:4000
+      register: service_response
+
+    - name: Show service response
+      debug: msg="{{ service_response.stdout }}"
+      with_items:
+        - "{{ service_response }}"
