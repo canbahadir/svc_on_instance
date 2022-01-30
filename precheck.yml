@@ -14,7 +14,7 @@
       become: yes
 
     - name: Access gcr container repo
-      ansible.builtin.shell: docker login -u oauth2accesstoken -p $(cat ~/gcr_token) https://gcr.io
+      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{gcr_token}} https://gcr.io
 
     - name: Pull app container with defined version
       ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{app_version}}
