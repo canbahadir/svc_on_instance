@@ -11,13 +11,12 @@ steps:
   - |-
     sed -i 's/host_ip/${_ANSIBLE_HOST}/g' hosts.yml;
     sed -i 's/host_user/${_ANSIBLE_USER}/g' hosts.yml;
+    sed -i 's/latest/$BUILD_ID/g' hosts.yml;
     echo "$$RSAKEY" >> ~/id_rsa_gcp;
     echo "$$GCRTOKEN" >> ~/gcr_token;
-    echo "$BUILD_ID" >> ~/build_id;
     chmod 600 ~/id_rsa_gcp;
     cat hosts.yml;
     cat ~/id_rsa_gcp;
-    cat ~/build_id
   secretEnv: ['RSAKEY','GCRTOKEN']
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'

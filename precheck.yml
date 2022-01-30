@@ -13,16 +13,11 @@
         state: latest
       become: yes
 
-    - name: Execute the command in remote shell; stdout goes to the specified file on the remote
+    - name: Access gcr container repo
       ansible.builtin.shell: docker login -u oauth2accesstoken -p $(cat ~/gcr_token) https://gcr.io
 
-    - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-      ansible.builtin.shell: cat ~/build_id
-      register: build_id
+    - name: Pull app container with defined version
+      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{app_version}}
 
-    - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{item}}
-      with_items: build_id
-
-    - name: Execute the command in remote shell; stdout goes to the specified file on the remote
+    - name: Check downloaded container images
       ansible.builtin.shell: docker image ls
