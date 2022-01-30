@@ -27,3 +27,9 @@
 
     - name: Check downloaded container images
       ansible.builtin.shell: docker image ls
+      register: imagelist
+
+    - name: List image names
+      debug: msg="{{ item.stdout }}"
+      with_items:
+        - "{{ imagelist }}"
