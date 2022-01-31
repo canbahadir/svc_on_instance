@@ -4,54 +4,54 @@
 
     tasks:
 
-    - name: Check if host has OS requirements
-      assert:
-      that:
-      - ansible_facts['ansible_distribution'] == "CentOS"
-      - ansible_facts['distribution_major_version'] == 8
-      fail_msg: Host {{ ansible_hostname }} does not meet minimal reqs
-    
-    - name: Install the latest version of podman-docker if it does not exist
-      dnf:
-        name: podman-docker
-        state: latest
-      become: yes
+      - name: Check if host has OS requirements
+        assert:
+          that:
+            - ansible_facts['distribution'] == "CentOS"
+            - ansible_facts['distribution_major_version']  == "8"
+          fail_msg: Host {{ ansible_hostname }} does not meet minimal reqs
+      
+      - name: Install the latest version of podman-docker if it does not exist
+        dnf:
+          name: podman-docker
+          state: latest
+        become: yes
 
-    - name: save gcr token
-      ansible.builtin.shell: cat ~/gcr_token
-      register: gcrtoken
+      - name: save gcr token
+        ansible.builtin.shell: cat ~/gcr_token
+        register: gcrtoken
 
-    - name: Access gcr container repo
-      ansible.builtin.shell: docker login -u oauth2accesstoken -p {{ item.stdout }} gcr.io
-      with_items: 
-        - "{{ gcrtoken }}"
+      - name: Access gcr container repo
+        ansible.builtin.shell: docker login -u oauth2accesstoken -p {{ item.stdout }} gcr.io
+        with_items: 
+          - "{{ gcrtoken }}"
 
-    - name: Pull app container with defined version
-      ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{ app_version }}
+      - name: Pull app container with defined version
+        ansible.builtin.shell: docker pull gcr.io/cloudstudy3-bc/svc_docker:{{ app_version }}
 
-    - name: Check downloaded container images
-      ansible.builtin.shell: docker image ls
-      register: imagelist
+      - name: Check downloaded container images
+        ansible.builtin.shell: docker image ls
+        register: imagelist
 
-    - name: List image names
-      debug: msg="{{ item.stdout }}"
-      with_items:
-        - "{{ imagelist }}"
+      - name: List image names
+        debug: msg="{{ item.stdout }}"
+        with_items:
+          - "{{ imagelist }}"
 
-    - name: Remove previous container if exist
-      community.docker.docker_container:
-        name: node-svc
-        state: absent
-        
-    - name: Pull app container with defined version
-      ansible.builtin.shell: docker run -d -p 4000:8080 --name node-svc svc_docker:{{ app_version }}
+      - name: Remove previous container if exist
+        community.docker.docker_container:
+          name: node-svc
+          state: absent
+          
+      - name: Pull app container with defined version
+        ansible.builtin.shell: docker run -d -p 4000:8080 --name node-svc svc_docker:{{ app_version }}
 
-    - name: Check service
-      ansible.builtin.shell: curl localhost:4000
-      register: service_response
+      - name: Check service
+        ansible.builtin.shell: curl localhost:4000
+        register: service_response
 
-    - name: Show service response
-      debug: msg="{{ service_response.stdout }}"
-      with_items:
-        - "{{ service_response }}"
+      - name: Show service response
+        debug: msg="{{ service_response.stdout }}"
+        with_items:
+          - "{{ service_response }}"
 
