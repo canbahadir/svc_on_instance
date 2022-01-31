@@ -4,8 +4,12 @@
 
     tasks:
 
-    - name: Distribution check
-      debug: msg="{{ ansible_distribution }}"
+    - name: Check if host has OS requirements
+      assert:
+      that:
+      - ansible_facts['ansible_distribution'] == "CentOS"
+      - ansible_facts['distribution_major_version'] == 8
+      fail_msg: Host {{ ansible_hostname }} does not meet minimal reqs
     
     - name: Install the latest version of podman-docker if it does not exist
       dnf:
@@ -34,6 +38,11 @@
       with_items:
         - "{{ imagelist }}"
 
+    - name: Remove previous container if exist
+      community.docker.docker_container:
+        name: node-svc
+        state: absent
+        
     - name: Pull app container with defined version
       ansible.builtin.shell: docker run -d -p 4000:8080 --name node-svc svc_docker:{{ app_version }}
 
@@ -45,3 +54,4 @@
       debug: msg="{{ service_response.stdout }}"
       with_items:
         - "{{ service_response }}"
+
