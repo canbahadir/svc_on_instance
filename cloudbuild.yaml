@@ -21,10 +21,10 @@ steps:
   secretEnv: ['RSAKEY','GCRTOKEN']
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'
-  args: ['-i', 'hosts.yml', 'svc_installer.yml']
+  args: ['-i', 'hosts.yml', 'svc_installer.yml', 'ansible_python_interpreter=/usr/bin/python3']
 - name: 'gcr.io/$PROJECT_ID/ansible'
   entrypoint: '/usr/bin/ansible-playbook'
-  args: ['-i', 'hosts.yml', 'svc_tests.yml']
+  args: ['-i', 'hosts.yml', 'svc_tests.yml', 'ansible_python_interpreter=/usr/bin/python3']
 availableSecrets:
   secretManager:
   - versionName:   projects/$PROJECT_ID/secrets/id_rsa_gcp/versions/1
