@@ -12,7 +12,7 @@
           fail_msg: Host {{ ansible_hostname }} does not meet minimal reqs
 
       - name: Container present
-        community.docker.docker_container:
+        containers.podman.podman_container:
           name: svc_docker
           state: present
           image: svc_docker:{{ app_version }}

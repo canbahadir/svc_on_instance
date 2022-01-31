@@ -39,7 +39,7 @@
           - "{{ imagelist }}"
 
       - name: Remove previous container if exist
-        community.docker.docker_container:
+        containers.podman.podman_container:
           name: node-svc
           state: absent
           
